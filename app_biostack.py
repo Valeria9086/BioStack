@@ -82,64 +82,61 @@ if not df.empty:
         st.subheader("Bitácora de Aplicaciones")
         st.dataframe(df.sort_values(by='Fecha', ascending=False), use_container_width=True, height=300)
 
-    # 7. ASISTENTE DE CULTIVO PREMIUM (EL NUEVO APARTADO)
+    # 7. ASISTENTE DE CULTIVO PREMIUM (CON TEXTO ACTUALIZADO)
     st.divider()
     with st.container():
         st.subheader("Consultoría Bio-Inteligente")
-        st.info("El sistema analizará los datos del nodo para emitir una recomendación técnica basada en IA.")
+        # Cambio realizado aquí: Quitamos la mención a la IA
+        st.info("Diagnóstico técnico de parámetros en tiempo real para la optimización del cultivo.")
 
-        if st.button(" GENERAR DIAGNÓSTICO ESTRATÉGICO"):
+        if st.button("GENERAR DIAGNÓSTICO ESTRATÉGICO"):
             ultima_temp = df['Temp_C'].iloc[-1]
             ultima_hum = df['Hum_Porcentaje'].iloc[-1]
 
             st.markdown("---")
             
             if ultima_temp > 28:
-                st.error("###  ALERTA DE ESTRÉS TÉRMICO")
+                st.error("### ALERTA DE ESTRÉS TÉRMICO")
                 st.markdown(f"""
                     <div style="background-color:#ffebee; padding:20px; border-radius:10px; border-left: 8px solid #c62828;">
-                        <h4 style="color:#c62828; margin:0;">Diagnóstico Clínico:</h4>
-                        <p style="color:black; font-size:16px;">La temperatura de <b>{ultima_temp}°C</b> supera el umbral de seguridad. 
-                        Se observa riesgo de desnaturalización enzimática y cierre estomático.</p>
+                        <h4 style="color:#c62828; margin:0;">Diagnóstico Técnico:</h4>
+                        <p style="color:black; font-size:16px;">La temperatura de <b>{ultima_temp}°C</b> supera el umbral de seguridad operativa.</p>
                         <h4 style="color:#c62828; margin-top:10px;">Plan de Acción Sugerido:</h4>
                         <ul style="color:black; font-size:15px;">
-                            <li><b>Intervención:</b> Activar riego por nebulización para enfriamiento evaporativo.</li>
-                            <li><b>Bio-Protocolo:</b> Aplicar inductores de proteínas HSP y protectores osmóticos.</li>
-                            <li><b>Monitoreo:</b> Verificar turgencia celular en las próximas 2 horas.</li>
+                            <li><b>Intervención:</b> Activar sistemas de enfriamiento evaporativo.</li>
+                            <li><b>Bio-Protocolo:</b> Priorizar la turgencia celular y protección de fotosistemas.</li>
                         </ul>
                     </div>
                 """, unsafe_allow_html=True)
             
             elif ultima_hum < 40:
-                st.warning("###  ALERTA DE DÉFICIT HÍDRICO")
+                st.warning("### ALERTA DE DÉFICIT HÍDRICO")
                 st.markdown(f"""
                     <div style="background-color:#fff8e1; padding:20px; border-radius:10px; border-left: 8px solid #f9a825;">
-                        <h4 style="color:#f9a825; margin:0;">Diagnóstico Clínico:</h4>
-                        <p style="color:black; font-size:16px;">Humedad crítica detectada (<b>{ultima_hum}%</b>). Alta tasa de transpiración en tejidos.</p>
+                        <h4 style="color:#f9a825; margin:0;">Diagnóstico Técnico:</h4>
+                        <p style="color:black; font-size:16px;">Humedad crítica detectada (<b>{ultima_hum}%</b>). Riesgo de deshidratación tisular.</p>
                         <h4 style="color:#f9a825; margin-top:10px;">Plan de Acción Sugerido:</h4>
                         <ul style="color:black; font-size:15px;">
-                            <li><b>Intervención:</b> Reducir ventilación forzada para conservar el microclima foliar.</li>
-                            <li><b>Bio-Protocolo:</b> Incrementar niveles de Potasio (K+) para regular el potencial hídrico.</li>
-                            <li><b>Riesgo:</b> Posible marchitamiento temporal si no se compensa el déficit.</li>
+                            <li><b>Intervención:</b> Regular la ventilación para estabilizar el microclima.</li>
+                            <li><b>Monitoreo:</b> Verificar el estado hídrico de los tejidos conductores.</li>
                         </ul>
                     </div>
                 """, unsafe_allow_html=True)
             
             else:
-                st.success("###  CONDICIONES DE BIOPROCESO ÓPTIMAS")
+                st.success("### CONDICIONES DE BIOPROCESO ÓPTIMAS")
                 st.markdown(f"""
                     <div style="background-color:#e8f5e9; padding:20px; border-radius:10px; border-left: 8px solid #2e7d32;">
-                        <h4 style="color:#2e7d32; margin:0;">Diagnóstico Clínico:</h4>
-                        <p style="color:black; font-size:16px;">Equilibrio homeostático detectado. El metabolismo se encuentra en su punto máximo de eficiencia fotosintética.</p>
+                        <h4 style="color:#2e7d32; margin:0;">Diagnóstico Técnico:</h4>
+                        <p style="color:black; font-size:16px;">Equilibrio homeostático detectado. Parámetros dentro del rango de máxima eficiencia.</p>
                         <h4 style="color:#2e7d32; margin-top:10px;">Plan de Acción Sugerido:</h4>
                         <ul style="color:black; font-size:15px;">
-                            <li><b>Estatus:</b> Continuar con el régimen de fertirriego estándar.</li>
-                            <li><b>Recomendación:</b> Excelente momento para aplicaciones de nutrición avanzada.</li>
-                            <li><b>Nota:</b> No se detectan señales de estrés abiótico.</li>
+                            <li><b>Estatus:</b> Mantener régimen de monitoreo pasivo.</li>
+                            <li><b>Recomendación:</b> Condiciones ideales para el desarrollo vegetativo.</li>
                         </ul>
                     </div>
                 """, unsafe_allow_html=True)
 
 else:
     st.warning("Esperando datos del sistema autónomo...")
-    st.info("Asegúrate de que el proceso de captura de datos esté activo en la terminal.")
+    st.info("Asegúrate de que el proceso de captura de datos esté activo.")
