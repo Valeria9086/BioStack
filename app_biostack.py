@@ -8,7 +8,7 @@ import os
 # Configuración de la página (Profesional)
 st.set_page_config(page_title="Bio-Stack | Control de Bioprocesos", layout="wide")
 
-st.title(" Bio-Stack: Sistema de Gestión Epigenética")
+st.title("🌱 Bio-Stack: Sistema de Gestión Epigenética")
 st.markdown("### Nodo de Monitoreo Predictivo - Puebla, MX")
 
 # Función para cargar datos de la bitácora
@@ -24,7 +24,6 @@ df = cargar_datos()
 
 if not df.empty:
     # Convertir fecha a formato entendible
-   # Cambia la línea vieja por esta:
     df['Fecha'] = pd.to_datetime(df['Fecha'], format='mixed')
     
     # 1. MÉTRICAS CLAVE (KPIs) en la parte superior
@@ -41,14 +40,14 @@ if not df.empty:
     # 2. GRÁFICA DE IMPACTO (Tendencia de Temperatura vs Umbrales)
     st.subheader("Análisis de Estrés Térmico en Tiempo Real")
     fig = px.line(df, x='Fecha', y='Temp_C', title='Variación Térmica del Cultivo',
-                 line_shape='spline', markers=True, template="plotly_dark")
+                  line_shape='spline', markers=True, template="plotly_dark")
     
     # Añadir línea roja de umbral de peligro
     fig.add_hline(y=28, line_dash="dash", line_color="red", annotation_text="Umbral de Estrés")
     st.plotly_chart(fig, use_container_width=True)
 
     # 3. DISTRIBUCIÓN DE ACCIONES (Gráfica de Pastel)
-    st.subheader(" Resumen de Intervenciones Biotecnológicas")
+    st.subheader("Resumen de Intervenciones Biotecnológicas")
     fig_pie = px.pie(df, names='Accion_Biotech', hole=0.4, 
                      color_discrete_sequence=px.colors.qualitative.Pastel)
     st.plotly_chart(fig_pie)
@@ -56,6 +55,37 @@ if not df.empty:
     # 4. TABLA DE LOGS PROFESIONAL
     st.subheader("Bitácora Histórica de Aplicaciones")
     st.dataframe(df.sort_values(by='Fecha', ascending=False), use_container_width=True)
+
+    # --- AQUÍ PEGAMOS EL BOTÓN DE SUGERENCIA ---
+    st.divider()
+    st.subheader("Asistente de Cultivo Inteligente")
+    st.markdown("Presiona el botón para recibir una recomendación técnica basada en el estado actual del nodo.")
+
+    if st.button("Generar Sugerencia de Manejo"):
+        # Extraemos los datos actuales
+        ultima_temp = df['Temp_C'].iloc[-1]
+        ultima_hum = df['Hum_Porcentaje'].iloc[-1]
+
+        # Lógica de decisión
+        if ultima_temp > 28:
+            st.error(f"###  Alerta de Riesgo: {ultima_temp}°C")
+            st.write("""
+                **Diagnóstico:** Estrés térmico detectado. 
+                **Sugerencia:** Aplicar riego de enfriamiento y verificar la activación de protocolos de protección epigenética (NEUMA). 
+                Evite fertilización foliar en este momento para no quemar los estomas.
+            """)
+        elif ultima_hum < 40:
+            st.warning(f"###  Alerta de Sequía: {ultima_hum}% Humedad")
+            st.write("""
+                **Diagnóstico:** Déficit hídrico atmosférico.
+                **Sugerencia:** Incrementar la humedad relativa en el ambiente. Si el cultivo es en invernadero, cerrar mallas para conservar vapor de agua.
+            """)
+        else:
+            st.success("### Estado Óptimo Detectado")
+            st.write("""
+                **Diagnóstico:** El cultivo se encuentra en su zona de confort térmico y de humedad.
+                **Sugerencia:** Mantener el manejo actual. Es un buen momento para realizar podas o trasplantes si el ciclo fenológico lo permite.
+            """)
 
 else:
     st.warning("Esperando datos del sistema autónomo...")
